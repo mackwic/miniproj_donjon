@@ -1,0 +1,22 @@
+# Salles
+ROOMS: 10
+MONSTER: 4 4
+MONSTER: 9 20
+BREWERY: 7 5
+DEAD: 3
+
+# couloirs
+ARCS
+ARC: 1 1 2
+ARC: 1 1 3
+ARC: 2 1 4
+ARC: 2 1 5
+ARC: 3 30 6
+ARC: 4 1 5
+ARC: 5 6 2
+ARC: 5 1 6
+ARC: 6 1 7
+ARC: 7 1 8
+ARC: 8 1 6
+ARC: 8 1 9
+ARC: 9 1 10

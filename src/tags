@@ -1,0 +1,48 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CC	Makefile	/^CC := clang$/;"	m
+CFLAGS	Makefile	/^CFLAGS := -Wall -W -ansi$/;"	m
+DEBUG	main.c	8;"	d	file:
+DEBUG	test.h	13;"	d
+DEBUG	test.h	8;"	d
+FILES	Makefile	/^FILES := arc_list.c parser.c main.c$/;"	m
+INC	Makefile	/^INC :=$/;"	m
+MARK	test.h	12;"	d
+MARK	test.h	7;"	d
+ROOM_BREWERY	donjon.h	/^    ROOM_BREWERY$/;"	e	enum:ROOM_TYPE
+ROOM_MONSTER	donjon.h	/^    ROOM_MONSTER,$/;"	e	enum:ROOM_TYPE
+ROOM_ORDINARY	donjon.h	/^    ROOM_ORDINARY,$/;"	e	enum:ROOM_TYPE
+ROOM_TRAP	donjon.h	/^    ROOM_TRAP,$/;"	e	enum:ROOM_TYPE
+ROOM_TYPE	donjon.h	/^enum ROOM_TYPE$/;"	g
+TEST	main.c	7;"	d	file:
+_TEST_	test.h	2;"	d
+_arc_list_	arc_list.h	2;"	d
+_donjon_	donjon.h	2;"	d
+_parser_	parser.h	2;"	d
+add	arc_list.c	/^struct arc_list* add(struct arc_list * l, struct arc * node)$/;"	f
+arc	donjon.h	/^struct arc$/;"	s
+arc_list	arc_list.h	/^struct arc_list$/;"	s
+arcs	donjon.h	/^    struct arc_list * arcs;$/;"	m	struct:donjon	typeref:struct:donjon::arc_list
+cost	donjon.h	/^    int cost;$/;"	m	struct:arc
+divide_str	parser.c	/^char** divide_str(const char * input)$/;"	f
+donjon	donjon.h	/^struct donjon$/;"	s
+empty_list	arc_list.h	16;"	d
+from	donjon.h	/^    int from;$/;"	m	struct:arc
+is_empty	arc_list.h	17;"	d
+len	arc_list.c	/^size_t len(struct arc_list * l)$/;"	f
+main	main.c	/^int main (int argc, char const* argv[])$/;"	f
+main_test	main.c	/^struct donjon * main_test(const char * file)$/;"	f
+nb_room	donjon.h	/^    int nb_room;$/;"	m	struct:donjon
+next	arc_list.h	/^    struct arc_list * next;$/;"	m	struct:arc_list	typeref:struct:arc_list::arc_list
+node	arc_list.h	/^    struct arc * node;$/;"	m	struct:arc_list	typeref:struct:arc_list::arc
+parse	parser.c	/^struct donjon * parse(const char * filename)$/;"	f
+parser_suite	main.c	/^Suite * parser_suite (void)$/;"	f
+preprocess	parser.c	/^char** preprocess(const char * input)$/;"	f
+process	parser.c	/^struct donjon * process(const char * input)$/;"	f
+rooms	donjon.h	/^    int * rooms;$/;"	m	struct:donjon
+str_of_file	parser.c	/^char * str_of_file(const char * filename)$/;"	f
+to	donjon.h	/^    int to;$/;"	m	struct:arc
