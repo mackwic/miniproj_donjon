@@ -47,7 +47,7 @@ int preprocess(const char * input, char ** res)
 			}
 
 			buff[pos++] = '\0';
-			MALLOC(pos * sizeof(*buff), res[count]);
+			MALLOC(pos * (sizeof *buff), res[count]);
 
 			strcpy(res[count], buff);
 			bzero(buff, MAX_COLLUMN);
@@ -80,7 +80,7 @@ int divide_str(const char * input, char ** res)
 	int pos = 0;
 	char ** ptr;
 
-	MALLOC(50 * sizeof(*res), res);
+	MALLOC(50 * (sizeof *res), res);
 	ptr = res;
 
 	bzero(buff, MAX_COLLUMN);
@@ -93,7 +93,7 @@ int divide_str(const char * input, char ** res)
 		{
 			MARK;
 			buff[pos++] = '\0';
-			MALLOC(pos * sizeof(*buff), ptr);
+			MALLOC(pos * (sizeof *buff), ptr);
 
 			strcpy(*ptr, buff);
 			bzero(buff, MAX_COLLUMN);
@@ -287,9 +287,9 @@ int str_of_file(const char * filename, char ** buff)
     rewind(file);
     MARK;
 
-    *buff = calloc(size + 2, sizeof(**buff));
-    fread (*buff, sizeof(**buff), size, file);
-    *buff[size+1] = '\0';
+    *buff = calloc(size + 2, (sizeof **buff));
+    fread (*buff, (sizeof **buff), size, file);
+    *buff[size-1] = '\0';
     MARK;
 
     return 0;
@@ -302,13 +302,21 @@ struct donjon * parse(const char * filename)
     char ** input = NULL;
     struct donjon * res = NULL;
 
+    MALLOC(MAX_LINES * (sizeof *input), input);
+
     MARK;
     if (str_of_file(filename, input))
+    {
+	printf("ERROR: impossible to read the map file (bad name ?)");
 	exit(EXIT_FAILURE);
+    }
 
     MARK;
     if (process (*input, res))
+    {
+	printf("ERROR: something strange happens during the parsing of the map file...");
 	exit(EXIT_FAILURE);
+    }
 
     return res;
 }

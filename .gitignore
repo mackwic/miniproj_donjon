@@ -1,3 +1,11 @@
+# Temporary vim files
+*.swp
+
+# We don't know what could happens..
+plop
+lol
+tmp
+
 # Compiled Object files
 *.slo
 *.lo
