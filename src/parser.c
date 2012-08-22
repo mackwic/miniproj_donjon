@@ -240,8 +240,6 @@ int process(const char * input, struct donjon * res)
 			    return -1;
 			}
 		}
-	MALLOC(MAX_COLLUMN * (sizeof *words), words);
-	ptr_words = words;
 		else if (strcmp(*words, "MONSTER") == 0)
 		{
 			MARK;
