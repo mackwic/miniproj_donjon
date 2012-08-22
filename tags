@@ -13,22 +13,26 @@ CFLAGS	Makefile	/^    CFLAGS := -Werror $(CFLAGS)$/;"	m
 CFLAGS	Makefile	/^CFLAGS := $(FLAGS) $(INC)$/;"	m
 CFLAGS	src/Makefile	/^CFLAGS := -Wall -W -ansi$/;"	m
 CFLAGS	test/Makefile	/^CFLAGS := -Wall -W -ansi$/;"	m
-DEBUG	src/test.h	15;"	d
-DEBUG	src/test.h	8;"	d
+DEBUG	src/test.h	11;"	d
+DEBUG	src/test.h	6;"	d
+DEBUGN	src/test.h	12;"	d
+DEBUGN	src/test.h	7;"	d
 DEBUG_FLAGS	Makefile	/^DEBUG_FLAGS := -g -ftrapv -fexceptions -D_DEBUG=1$/;"	m
 EXE	Makefile	/^EXE := stein$/;"	m
 FILES	Makefile	/^FILES := $(FILES)$/;"	m
 FILES	Makefile	/^FILES := $(FILES:%.c=src\/%.c)$/;"	m
-FILES	src/Makefile	/^FILES := arc_list.c parser.c main.c$/;"	m
+FILES	src/Makefile	/^FILES := donjon.c arc_list.c parser.c main.c$/;"	m
 FLAGS	Makefile	/^FLAGS := -Wall -W -ansi$/;"	m
 INC	Makefile	/^INC := $(INC)$/;"	m
 INC	src/Makefile	/^INC :=$/;"	m
 LIBS	Makefile	/^LIBS :=$/;"	m
 MAKE_DEBUG	Makefile	/^MAKE_DEBUG := 1$/;"	m
-MALLOC	src/test.h	10;"	d
-MALLOC	src/test.h	16;"	d
-MARK	src/test.h	14;"	d
-MARK	src/test.h	7;"	d
+MALLOC	src/test.h	22;"	d
+MALLOC	src/test.h	31;"	d
+MARK	src/test.h	20;"	d
+MARK	src/test.h	30;"	d
+MAX_COLLUMN	src/parser.c	16;"	d	file:
+MAX_LINES	src/parser.c	15;"	d	file:
 MM	test/t_parser.c	11;"	d	file:
 OBJ	Makefile	/^OBJ := $(FILES:%.c=%.o)$/;"	m
 ROOM_BREWERY	src/donjon.h	/^    ROOM_BREWERY$/;"	e	enum:ROOM_TYPE
@@ -49,10 +53,13 @@ arcs	src/donjon.h	/^    struct arc_list * arcs;$/;"	m	struct:donjon	typeref:stru
 cost	src/donjon.h	/^    int cost;$/;"	m	struct:arc
 count_arr	test/t_parser.c	/^int count_arr(void * arr, size_t size)$/;"	f
 create_arc	src/donjon.c	/^struct arc * create_arc(const int cost, const int from, const int to)$/;"	f
-create_donjon	src/donjon.c	/^struct donjon * create_donjon(const int nb_room, const int * rooms, struct arc_list * arcs)$/;"	f
+create_donjon	src/donjon.c	/^struct donjon * create_donjon(const int nb_room, int * rooms, struct arc_list * arcs)$/;"	f
+divide_str	src/parser.c	/^int divide_str(const char * input, char ** res)$/;"	f
 donjon	src/donjon.h	/^struct donjon$/;"	s
 empty_list	src/arc_list.h	16;"	d
+free_dyn_array	src/parser.c	/^void free_dyn_array(char ** arr)$/;"	f
 from	src/donjon.h	/^    int from;$/;"	m	struct:arc
+get_room_nb	src/parser.c	/^int get_room_nb(char ** words, int * nb)$/;"	f
 is_all_eq	test/t_parser.c	/^int is_all_eq (char ** arr1, char ** arr2, int how_many)$/;"	f
 is_empty	src/arc_list.h	17;"	d
 len	src/arc_list.c	/^size_t len(struct arc_list * l)$/;"	f
@@ -61,10 +68,15 @@ main_test	src/main.c	/^struct donjon * main_test(const char * file)$/;"	f
 nb_room	src/donjon.h	/^    int nb_room;$/;"	m	struct:donjon
 next	src/arc_list.h	/^    struct arc_list * next;$/;"	m	struct:arc_list	typeref:struct:arc_list::arc_list
 node	src/arc_list.h	/^    struct arc * node;$/;"	m	struct:arc_list	typeref:struct:arc_list::arc
+parse	src/parser.c	/^struct donjon * parse(const char * filename)$/;"	f
 parser_suite	src/main.c	/^Suite * parser_suite (void)$/;"	f
+preprocess	src/parser.c	/^int preprocess(const char * input, char ** res)$/;"	f
+process	src/parser.c	/^int process(const char * input, struct donjon * res)$/;"	f
 rooms	src/donjon.h	/^    int * rooms;$/;"	m	struct:donjon
-strfill	src/parser.c	/^char* strfill(char* str, const int len, const char c)$/;"	f
-strsep	src/parser.c	/^char** strsep(const char* input, const char[] separators)$/;"	f
+set_brewery_in_room	src/parser.c	/^int set_brewery_in_room(int rooms[], char ** words)$/;"	f
+set_monster_in_room	src/parser.c	/^int set_monster_in_room(int rooms[], char ** words)$/;"	f
+set_trap_in_room	src/parser.c	/^int set_trap_in_room(int rooms[], char ** words)$/;"	f
+str_of_file	src/parser.c	/^int str_of_file(const char * filename, char ** buff)$/;"	f
 t_CFLAGS	Makefile	/^t_CFLAGS := -D_TEST=1 -g $(t_INC)$/;"	m
 t_EXE	Makefile	/^t_EXE := $(EXE)_test$/;"	m
 t_FILES	Makefile	/^t_FILES := $(t_FILES)$/;"	m

@@ -341,11 +341,6 @@ int str_of_file(const char * filename, char ** buff)
     }
 
     fread (*buff, (sizeof **buff), size, file);
-    /* *buff[size+1] = '\0'; ca plante... mais est-ce necessaire ? */
-    /* OUI */
-
-    DEBUG("PLOP 2\n");
-
     MARK;
 
     fclose(file);
