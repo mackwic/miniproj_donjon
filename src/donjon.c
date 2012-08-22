@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "test.h"
 #include "arc_list.h"
 #include "donjon.h"
