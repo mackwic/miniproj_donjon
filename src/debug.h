@@ -3,7 +3,7 @@
 
 #ifdef _DEBUG
 
-#include <stdio.h.h>
+#include <stdio.h>
 
 #define DEBUG(args...) printf(args)
 #define DEBUGN(args...) printf(args"\n")

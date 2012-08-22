@@ -3,7 +3,7 @@
 #include "arc_list.h"
 #include "donjon.h"
 
-struct arc * create_arc(const int cost, const int from, const int to)
+struct arc * create_arc(const int from, const int cost, const int to)
 {
     struct arc * res;
     MALLOC(sizeof(*res), res);

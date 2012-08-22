@@ -34,7 +34,7 @@ int preprocess(const char * input, char ** res)
 	bzero(buff, MAX_COLLUMN);
 
 	MARK;
-	while (input != NULL && *input != NULL && *input != '\0')
+	while (input != NULL && *input != '\0')
 	{
 		MARK;
 		DEBUG("[preprocess] %c[%d]\t%d\n", *input, *input, count);
@@ -63,14 +63,23 @@ int preprocess(const char * input, char ** res)
 			if (*input == '#')
 				skip_line = 1;
 
-			if (!skip_line && *input != ':')
+			if (!skip_line &&
+				((*input >= 'A' && *input <= 'Z')
+				|| (*input >= 'a' && *input <= 'z')
+				|| (*input >= '0' && *input <= '9')
+				|| *input == ' '))
 				buff[pos++] = *input;
 		}
 
 		input++;
 	}
 
+	buff[pos++] = '\0';
+	MALLOC(pos * (sizeof *buff), res[count]);
+
+	strcpy(res[count], buff);
 	res[count] = NULL;
+
 	DEBUG("[preprocess] END OF TASK\n");
 	return 0;
 }
@@ -115,6 +124,11 @@ int divide_str(const char * input, char *** res)
 		input++;
 	}
 
+	buff[pos++] = '\0';
+	MALLOC(pos * (sizeof *buff), *ptr);
+	strcpy(*ptr, buff);
+
+	ptr++;
 	*ptr = NULL;
 	DEBUGN("[divide_str] END OF TASK");
 	return 0;
@@ -129,6 +143,8 @@ int get_room_nb(char ** words, int * nb)
 	return -1;
 
     *nb = i;
+    DEBUG("====>> %d rooms detected\n", i);
+
     return 0;
 }
 
@@ -145,6 +161,7 @@ int set_monster_in_room(int rooms[], char ** words)
 	return -1;
 
     rooms[nb] = -1 * cost;
+    DEBUG("====>> monster lvl [%d] set in room [%d]\n", cost, nb);
 
     return 0;
 }
@@ -161,7 +178,8 @@ int set_brewery_in_room(int rooms[], char ** words)
     if (nb == 0 || cost == 0)
 	return -1;
 
-    rooms[nb] = -1 * cost;
+    rooms[nb] = cost;
+    DEBUG("====>> brewery lvl [%d] set in room [%d]\n", cost, nb);
 
     return 0;
 }
@@ -175,6 +193,7 @@ int set_trap_in_room(int rooms[], char ** words)
 	return -1;
 
     rooms[nb] = INT_MIN;
+    DEBUG("====>> trap set in room [%d]\n", nb);
 
     return 0;
 }
@@ -203,22 +222,22 @@ void free_dyn_array(char ** arr)
 /* appelle preprocess, puis divide_str,
  * puis construit une struct donjon* a partir des tokens
  */
-int process(const char * input, struct donjon * res)
+int process(const char * input, struct donjon ** res)
 {
 	DEBUGN("[process] BEGINNING OF TASK");
 	MARK;
 	char ** lines, ** ptr_lines;
 	char ** words, ** ptr_words;
 
-	MALLOC(MAX_LINES * (sizeof *lines), lines);
-	ptr_lines = lines;
-
 	int nb_rooms;
 	int rooms[1000];
 	struct arc_list * arcs = NULL;
 
 	MARK;
+	MALLOC(MAX_LINES * (sizeof *lines), lines);
+
 	preprocess(input, lines);
+	ptr_lines = lines;
 
 	while (lines != NULL && *lines != NULL)
 	{
@@ -226,9 +245,8 @@ int process(const char * input, struct donjon * res)
 		MARK;
 
 		MALLOC(MAX_COLLUMN * (sizeof *words), words);
-		ptr_words = words;
-
 		divide_str(*lines, &words);
+		ptr_words = words;
 
 		MARK;
 		if (strcmp(*words, "ROOMS") == 0)
@@ -261,7 +279,7 @@ int process(const char * input, struct donjon * res)
 		else if (strcmp(*words, "DEAD") == 0)
 		{
 			MARK;
-			if(set_trap_in_room(rooms, words + 2))
+			if(set_trap_in_room(rooms, words + 1))
 			{
 			    printf("ERROR: impossible to set the trap in the room");
 			    return -1;
@@ -277,6 +295,11 @@ int process(const char * input, struct donjon * res)
 				atoi(*(++words))
 				);
 
+			DEBUG("====>> arc [%d, %d, %d] created\n",
+				arcc->from,
+				arcc->cost,
+				arcc->to);
+
 			arcs = add(arcs, arcc);
 		}
 		MARK;
@@ -287,7 +310,7 @@ int process(const char * input, struct donjon * res)
 	MARK;
 	free_dyn_array(ptr_lines);
 
-	res = create_donjon(nb_rooms, rooms, arcs);
+	*res = create_donjon(nb_rooms, rooms, arcs);
 	DEBUGN("[process] END OF TASK");
 	return 0;
 }
@@ -346,7 +369,7 @@ struct donjon * parse(const char * filename)
     }
 
     MARK;
-    if (process (*input, res))
+    if (process (*input, &res))
     {
 	printf("ERROR: something strange happens during the parsing of the map file...");
 	exit(EXIT_FAILURE);
