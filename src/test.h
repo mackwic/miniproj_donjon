@@ -1,11 +1,23 @@
 #ifndef _TEST_
 #define _TEST_
 
+#ifdef _DEBUG
+
+#define DEBUG(args...) printf(args)
+#define DEBUGN(args...) printf(args"\n")
+
+#else
+
+#define DEBUG(args...)
+#define DEBUGN(args...)
+
+#endif
+
+
 #ifdef _TEST
 
 #include <check.h>
 #define MARK mark_point()
-#define DEBUG(args...) printf(args)
 
 #define MALLOC(size, ptr)			\
     if(!(ptr = malloc(size))) {			\
@@ -16,7 +28,6 @@
 #else
 
 #define MARK
-#define DEBUG(args...)
 #define MALLOC(size, ptr) \
     if(!(ptr = malloc(size))) {			\
 	printf("malloc error, hard failure");	\

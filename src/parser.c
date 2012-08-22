@@ -23,6 +23,7 @@
  */
 int preprocess(const char * input, char ** res)
 {
+	DEBUG("[preprocess] BEGINNING OF TASK\n");
 	MARK;
 	char buff[MAX_COLLUMN];
 	int pos = 0;
@@ -32,10 +33,10 @@ int preprocess(const char * input, char ** res)
 	bzero(buff, MAX_COLLUMN);
 
 	MARK;
-	while (input != NULL && *input != '\0')
+	while (input != NULL && *input != NULL && *input != '\0')
 	{
 		MARK;
-		DEBUG("%c\t%d\n", *input, count);
+		DEBUG("[preprocess] %c[%d]\t%d\n", *input, *input, count);
 		if (*input == '\n')
 		{
 			MARK;
@@ -69,18 +70,20 @@ int preprocess(const char * input, char ** res)
 	}
 
 	res[count] = NULL;
+	DEBUG("[preprocess] END OF TASK\n");
 	return 0;
 }
 
 /* separe une string par ses espaces, initialise res */
 int divide_str(const char * input, char ** res)
 {
+	DEBUG("[divide_str] BEGINNING OF TASK\n");
 	MARK;
 	char buff[MAX_COLLUMN];
 	int pos = 0;
 	char ** ptr;
 
-	MALLOC(50 * (sizeof *res), res);
+	MALLOC(MAX_LINES * (sizeof *res), res);
 	ptr = res;
 
 	bzero(buff, MAX_COLLUMN);
@@ -88,12 +91,13 @@ int divide_str(const char * input, char ** res)
 
 	while (*input != '\0')
 	{
+		DEBUG("[divide_str] %c \t %d\n", *input, pos);
 		MARK;
 		if (*input == ' ')
 		{
 			MARK;
 			buff[pos++] = '\0';
-			MALLOC(pos * (sizeof *buff), ptr);
+			MALLOC(pos * (sizeof *buff), *ptr);
 
 			strcpy(*ptr, buff);
 			bzero(buff, MAX_COLLUMN);
@@ -111,6 +115,7 @@ int divide_str(const char * input, char ** res)
 	}
 
 	*ptr = NULL;
+	DEBUGN("[divide_str] END OF TASK");
 	return 0;
 }
 
@@ -191,6 +196,7 @@ void free_dyn_array(char ** arr)
  */
 int process(const char * input, struct donjon * res)
 {
+	DEBUGN("[process] BEGINNING OF TASK");
 	MARK;
 	char ** lines;
 	char ** words;
@@ -205,8 +211,9 @@ int process(const char * input, struct donjon * res)
 	MARK;
 	preprocess(input, lines);
 
-	while (lines != NULL)
+	while (lines != NULL && *lines != NULL)
 	{
+		DEBUG("[process] current = {%s}\n", *lines);
 		MARK;
 		divide_str(*lines, words);
 
@@ -260,6 +267,7 @@ int process(const char * input, struct donjon * res)
 			arcs = add(arcs, arcc);
 		}
 		MARK;
+		lines++;
 	}
 
 	MARK;
@@ -267,6 +275,7 @@ int process(const char * input, struct donjon * res)
 	free_dyn_array(words);
 
 	res = create_donjon(nb_rooms, rooms, arcs);
+	DEBUGN("[process] END OF TASK");
 	return 0;
 }
 
@@ -287,11 +296,23 @@ int str_of_file(const char * filename, char ** buff)
     rewind(file);
     MARK;
 
-    *buff = calloc(size + 2, (sizeof **buff));
+    *buff = calloc(size + 5, (sizeof **buff));
+
+    if (*buff == NULL)
+    {
+	printf("FATAL: allocation error in parser.c at line 291\n");
+	exit(EXIT_FAILURE);
+    }
+
     fread (*buff, (sizeof **buff), size, file);
-    *buff[size-1] = '\0';
+    /* *buff[size+1] = '\0'; ca plante... mais est-ce necessaire ? */
+    /* OUI */
+
+    DEBUG("PLOP 2\n");
+
     MARK;
 
+    fclose(file);
     return 0;
 }
 
