@@ -75,7 +75,7 @@ int preprocess(const char * input, char ** res)
 }
 
 /* separe une string par ses espaces, initialise res */
-int divide_str(const char * input, char ** res)
+int divide_str(const char * input, char *** res)
 {
 	DEBUG("[divide_str] BEGINNING OF TASK\n");
 	MARK;
@@ -83,8 +83,8 @@ int divide_str(const char * input, char ** res)
 	int pos = 0;
 	char ** ptr;
 
-	MALLOC(MAX_LINES * (sizeof *res), res);
-	ptr = res;
+	MALLOC(MAX_LINES * (sizeof **res), *res);
+	ptr = *res;
 
 	bzero(buff, MAX_COLLUMN);
 	MARK;
@@ -180,15 +180,23 @@ int set_trap_in_room(int rooms[], char ** words)
 
 void free_dyn_array(char ** arr)
 {
+    DEBUG_SET_S_INT(nb_free, 0);
     char ** ptr = arr;
+    DEBUG_SET_INT(i, 0);
+    DEBUG_DO(nb_free++);
+    DEBUG("FREE %d of [dyn_array] BEGIN\n", nb_free);
 
-    while (ptr)
+    while (ptr != NULL && *ptr != NULL)
     {
+	DEBUG("FREE %d elt %d[%p]\n", nb_free, i, ptr);
 	free(*ptr);
 	ptr++;
+	DEBUG_DO(i++);
     }
 
+    DEBUG("FREE %d ENDED, FREE OF MAIN PTR\n", nb_free);
     free(arr);
+    DEBUG("FREE %d TASK END\n", nb_free);
 }
 
 /* appelle preprocess, puis divide_str,
@@ -198,11 +206,11 @@ int process(const char * input, struct donjon * res)
 {
 	DEBUGN("[process] BEGINNING OF TASK");
 	MARK;
-	char ** lines;
-	char ** words;
+	char ** lines, ** ptr_lines;
+	char ** words, ** ptr_words;
 
 	MALLOC(MAX_LINES * (sizeof *lines), lines);
-	MALLOC(MAX_COLLUMN * (sizeof *words), words);
+	ptr_lines = lines;
 
 	int nb_rooms;
 	int rooms[1000];
@@ -215,7 +223,11 @@ int process(const char * input, struct donjon * res)
 	{
 		DEBUG("[process] current = {%s}\n", *lines);
 		MARK;
-		divide_str(*lines, words);
+
+		MALLOC(MAX_COLLUMN * (sizeof *words), words);
+		ptr_words = words;
+
+		divide_str(*lines, &words);
 
 		MARK;
 		if (strcmp(*words, "ROOMS") == 0)
@@ -227,6 +239,8 @@ int process(const char * input, struct donjon * res)
 			    return -1;
 			}
 		}
+	MALLOC(MAX_COLLUMN * (sizeof *words), words);
+	ptr_words = words;
 		else if (strcmp(*words, "MONSTER") == 0)
 		{
 			MARK;
@@ -268,11 +282,11 @@ int process(const char * input, struct donjon * res)
 		}
 		MARK;
 		lines++;
+		free_dyn_array(ptr_words);
 	}
 
 	MARK;
-	free_dyn_array(lines);
-	free_dyn_array(words);
+	free_dyn_array(ptr_lines);
 
 	res = create_donjon(nb_rooms, rooms, arcs);
 	DEBUGN("[process] END OF TASK");
