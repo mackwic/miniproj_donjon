@@ -20,4 +20,6 @@ size_t len(struct arc_list * l);
 
 struct arc_list* add(struct arc_list * l, struct arc * node);
 
+void free_arc_list(struct arc_list * list);
+
 #endif

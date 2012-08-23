@@ -24,3 +24,24 @@ struct arc_list* add(struct arc_list * l, struct arc * node)
     return head;
 }
 
+void free_arc_list(struct arc_list * list)
+{
+    struct arc_list * ptr1 = list, * ptr2;
+    DEBUG_SET_INT(i, 0);
+    DEBUGN("FREE arc_list");
+
+    while (ptr1 != NULL)
+    {
+	DEBUG("FREE elt %d of arc_list", i);
+	ptr2 = ptr1;
+	free(ptr2);
+
+	ptr1 = ptr1->next;
+	DEBUG_DO(i++);
+    }
+
+    DEBUGN("FREE main pointer arc_list");
+    free(list);
+
+    DEBUGN("FREE END TASK");
+}

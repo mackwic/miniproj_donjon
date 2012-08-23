@@ -15,6 +15,12 @@ struct arc * create_arc(const int from, const int cost, const int to)
     return res;
 }
 
+void free_arc(struct arc * arc)
+{
+    DEBUGN("FREE arc");
+    free(arc);
+}
+
 struct donjon * create_donjon(const int nb_room, int * rooms, struct arc_list * arcs)
 {
     struct donjon * res;
@@ -26,3 +32,26 @@ struct donjon * create_donjon(const int nb_room, int * rooms, struct arc_list * 
 
     return res;
 }
+
+void free_donjon(struct donjon * doj)
+{
+    int * ptr1 = doj->rooms, *ptr2;
+    DEBUG_SET_INT(i, 0);
+    DEBUGN("FREE donjon");
+
+    while (ptr1 != NULL)
+    {
+	DEBUG("FREE room %d", i);
+	ptr2 = ptr1;
+	free(ptr2);
+	ptr1++;
+    }
+
+    DEBUGN("FREE end rooms, calling free on arc_list...");
+    free_arc_list(doj->arcs);
+
+    DEBUGN("FREE main pointer");
+    free(doj);
+    DEBUGN("FREE END TASK");
+}
+

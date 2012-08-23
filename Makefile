@@ -1,4 +1,4 @@
-MAKE_DEBUG := 1
+#MAKE_DEBUG := 1
 
 include src/Makefile
 include test/Makefile

@@ -13,26 +13,37 @@ CFLAGS	Makefile	/^    CFLAGS := -Werror $(CFLAGS)$/;"	m
 CFLAGS	Makefile	/^CFLAGS := $(FLAGS) $(INC)$/;"	m
 CFLAGS	src/Makefile	/^CFLAGS := -Wall -W -ansi$/;"	m
 CFLAGS	test/Makefile	/^CFLAGS := -Wall -W -ansi$/;"	m
-DEBUG	src/test.h	11;"	d
-DEBUG	src/test.h	6;"	d
-DEBUGN	src/test.h	12;"	d
-DEBUGN	src/test.h	7;"	d
+DEBUG	src/debug.h	21;"	d
+DEBUG	src/debug.h	8;"	d
+DEBUGN	src/debug.h	22;"	d
+DEBUGN	src/debug.h	9;"	d
+DEBUG_DO	src/debug.h	11;"	d
+DEBUG_DO	src/debug.h	24;"	d
+DEBUG_DO_END	src/debug.h	13;"	d
+DEBUG_DO_END	src/debug.h	26;"	d
+DEBUG_DO_START	src/debug.h	12;"	d
+DEBUG_DO_START	src/debug.h	25;"	d
 DEBUG_FLAGS	Makefile	/^DEBUG_FLAGS := -g -ftrapv -fexceptions -D_DEBUG=1$/;"	m
+DEBUG_SET_INT	src/debug.h	15;"	d
+DEBUG_SET_INT	src/debug.h	28;"	d
+DEBUG_SET_STRING	src/debug.h	17;"	d
+DEBUG_SET_STRING	src/debug.h	30;"	d
+DEBUG_SET_S_INT	src/debug.h	16;"	d
+DEBUG_SET_S_INT	src/debug.h	29;"	d
 EXE	Makefile	/^EXE := stein$/;"	m
 FILES	Makefile	/^FILES := $(FILES)$/;"	m
 FILES	Makefile	/^FILES := $(FILES:%.c=src\/%.c)$/;"	m
-FILES	src/Makefile	/^FILES := donjon.c arc_list.c parser.c main.c$/;"	m
+FILES	src/Makefile	/^FILES := donjon.c arc_list.c parser.c graph.c main.c$/;"	m
 FLAGS	Makefile	/^FLAGS := -Wall -W -ansi$/;"	m
 INC	Makefile	/^INC := $(INC)$/;"	m
 INC	src/Makefile	/^INC :=$/;"	m
 LIBS	Makefile	/^LIBS :=$/;"	m
-MAKE_DEBUG	Makefile	/^MAKE_DEBUG := 1$/;"	m
-MALLOC	src/test.h	22;"	d
-MALLOC	src/test.h	31;"	d
-MARK	src/test.h	20;"	d
-MARK	src/test.h	30;"	d
-MAX_COLLUMN	src/parser.c	16;"	d	file:
-MAX_LINES	src/parser.c	15;"	d	file:
+MALLOC	src/test.h	11;"	d
+MALLOC	src/test.h	20;"	d
+MARK	src/test.h	19;"	d
+MARK	src/test.h	9;"	d
+MAX_COLLUMN	src/parser.c	17;"	d	file:
+MAX_LINES	src/parser.c	16;"	d	file:
 MM	test/t_parser.c	11;"	d	file:
 OBJ	Makefile	/^OBJ := $(FILES:%.c=%.o)$/;"	m
 ROOM_BREWERY	src/donjon.h	/^    ROOM_BREWERY$/;"	e	enum:ROOM_TYPE
@@ -41,38 +52,65 @@ ROOM_ORDINARY	src/donjon.h	/^    ROOM_ORDINARY,$/;"	e	enum:ROOM_TYPE
 ROOM_TRAP	src/donjon.h	/^    ROOM_TRAP,$/;"	e	enum:ROOM_TYPE
 ROOM_TYPE	src/donjon.h	/^enum ROOM_TYPE$/;"	g
 START_TEST	test/t_parser.c	/^START_TEST (test_preprocess)$/;"	f
+_DEBUG_	src/debug.h	2;"	d
+_GRAPH_	src/graph.h	7;"	d
 _TEST_	src/test.h	2;"	d
 _arc_list_	src/arc_list.h	2;"	d
 _donjon_	src/donjon.h	2;"	d
 _parser_	src/parser.h	2;"	d
 _t_parser_	test/t_parser.c	2;"	d	file:
 add	src/arc_list.c	/^struct arc_list* add(struct arc_list * l, struct arc * node)$/;"	f
+add_link_to_node	src/graph.c	/^int add_link_to_node(struct s_node_array * graph, int idx, struct link * link)$/;"	f
 arc	src/donjon.h	/^struct arc$/;"	s
 arc_list	src/arc_list.h	/^struct arc_list$/;"	s
 arcs	src/donjon.h	/^    struct arc_list * arcs;$/;"	m	struct:donjon	typeref:struct:donjon::arc_list
+can_go	src/graph.c	/^int can_go(int from, int hp, struct s_node_array graph, struct movement * mov)$/;"	f
+cmd	src/main.c	/^int cmd(char * input)$/;"	f
+convert	src/graph.c	/^int convert(struct donjon * doj, struct s_node_array * graph)$/;"	f
 cost	src/donjon.h	/^    int cost;$/;"	m	struct:arc
+cost	src/graph.h	/^    int cost;$/;"	m	struct:link
+cost	src/graph.h	/^    int cost;$/;"	m	struct:s_node
+costs	src/graph.h	/^    int * costs; \/* cout de ces visites *\/$/;"	m	struct:movement
 count_arr	test/t_parser.c	/^int count_arr(void * arr, size_t size)$/;"	f
-create_arc	src/donjon.c	/^struct arc * create_arc(const int cost, const int from, const int to)$/;"	f
+create_arc	src/donjon.c	/^struct arc * create_arc(const int from, const int cost, const int to)$/;"	f
 create_donjon	src/donjon.c	/^struct donjon * create_donjon(const int nb_room, int * rooms, struct arc_list * arcs)$/;"	f
-divide_str	src/parser.c	/^int divide_str(const char * input, char ** res)$/;"	f
+divide_str	src/parser.c	/^int divide_str(const char * input, char *** res)$/;"	f
 donjon	src/donjon.h	/^struct donjon$/;"	s
 empty_list	src/arc_list.h	16;"	d
+first	src/graph.h	/^    struct s_node * first;$/;"	m	struct:s_node_array	typeref:struct:s_node_array::s_node
+free_arc	src/donjon.c	/^void free_arc(struct arc * arc)$/;"	f
+free_arc_list	src/arc_list.c	/^void free_arc_list(struct arc_list * list)$/;"	f
+free_donjon	src/donjon.c	/^void free_donjon(struct donjon * doj)$/;"	f
 free_dyn_array	src/parser.c	/^void free_dyn_array(char ** arr)$/;"	f
 from	src/donjon.h	/^    int from;$/;"	m	struct:arc
 get_room_nb	src/parser.c	/^int get_room_nb(char ** words, int * nb)$/;"	f
+go_to	src/graph.h	/^    struct link * go_to;$/;"	m	struct:s_node	typeref:struct:s_node::link
+id	src/graph.h	/^    int id;$/;"	m	struct:s_node
 is_all_eq	test/t_parser.c	/^int is_all_eq (char ** arr1, char ** arr2, int how_many)$/;"	f
 is_empty	src/arc_list.h	17;"	d
 len	src/arc_list.c	/^size_t len(struct arc_list * l)$/;"	f
+length	src/graph.h	/^    int length;$/;"	m	struct:s_node_array
+link	src/graph.h	/^struct link$/;"	s
+link_to	src/graph.h	/^    struct s_node * link_to;$/;"	m	struct:link	typeref:struct:link::s_node
 main	src/main.c	/^int main (int argc, char const* argv[])$/;"	f
 main_test	src/main.c	/^struct donjon * main_test(const char * file)$/;"	f
+movement	src/graph.h	/^struct movement$/;"	s
 nb_room	src/donjon.h	/^    int nb_room;$/;"	m	struct:donjon
 next	src/arc_list.h	/^    struct arc_list * next;$/;"	m	struct:arc_list	typeref:struct:arc_list::arc_list
+next	src/graph.h	/^    struct link * next;$/;"	m	struct:link	typeref:struct:link::link
 node	src/arc_list.h	/^    struct arc * node;$/;"	m	struct:arc_list	typeref:struct:arc_list::arc
+node_array_free	src/graph.c	/^void node_array_free(struct s_node_array * arr)$/;"	f
+node_array_get	src/graph.c	/^struct s_node * node_array_get(int idx, const struct s_node_array * arr)$/;"	f
+node_array_init	src/graph.c	/^int node_array_init(int length, struct s_node_array * res)$/;"	f
+node_array_set	src/graph.c	/^void node_array_set(int idx, struct s_node_array * arr, const struct s_node * value)$/;"	f
 parse	src/parser.c	/^struct donjon * parse(const char * filename)$/;"	f
 parser_suite	src/main.c	/^Suite * parser_suite (void)$/;"	f
 preprocess	src/parser.c	/^int preprocess(const char * input, char ** res)$/;"	f
-process	src/parser.c	/^int process(const char * input, struct donjon * res)$/;"	f
+process	src/parser.c	/^int process(const char * input, struct donjon ** res)$/;"	f
 rooms	src/donjon.h	/^    int * rooms;$/;"	m	struct:donjon
+rooms	src/graph.h	/^    int * rooms; \/* tableau de salles visitables *\/$/;"	m	struct:movement
+s_node	src/graph.h	/^struct s_node$/;"	s
+s_node_array	src/graph.h	/^struct s_node_array$/;"	s
 set_brewery_in_room	src/parser.c	/^int set_brewery_in_room(int rooms[], char ** words)$/;"	f
 set_monster_in_room	src/parser.c	/^int set_monster_in_room(int rooms[], char ** words)$/;"	f
 set_trap_in_room	src/parser.c	/^int set_trap_in_room(int rooms[], char ** words)$/;"	f
